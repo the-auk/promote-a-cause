@@ -17,18 +17,19 @@
   $string_data = '[' . $string_data . ']';
   $string_data = json_decode($string_data); # Convert it back into a PHP Object/Array
   $temp='fail';
-  foreach ($string_data as $value) {
+  foreach ($string_data as $key => $value) {
   $temp=$value[0];
   ?>
   <tr>
-      <th><?php echo $value[2]; ?></th>
-      <th width=200px><a href=""><?php echo $value[0]; ?></a></th>
-      <form method="POST"><th><input type="submit" value="Delete" name="delete"></th></form>
+      <td style="text-align:center"><?php echo $value[2]; ?></td>
+      <td style="text-align:center" width=200px ><a href=""><?php echo $temp; ?></a></td>
+      <form method="POST"><td><input type="submit" value="delete" name="delete"></th></form>
   </tr>
+
   <?php
+}
     if(isset($_POST['delete'])){
-      echo $temp;
-    }
+      echo "title";
     }
   ?>
 </body>

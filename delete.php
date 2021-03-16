@@ -11,6 +11,7 @@
   <input type="submit" value="Confirm" name="confirm">
   <input type="submit" value="Cancel" name="cancel">
 </form>
+
 <?php
 
 if(isset($_POST['confirm'])){
@@ -25,12 +26,22 @@ function cancel(){
 }
 
 function confirm(){
-    $myfile = "causes.txt";
-    $data = file($myfile);
-    foreach($data as $line) {
-      $temp = unserialize($line);
-      echo $temp[0];
+  $name="save the dogs";
+  $string_data = file_get_contents('causes.txt', true); # Grab the data
+  $filedata = file_get_contents('causes.txt', true);
+  $string_data = rtrim(trim($string_data), ',');
+  $string_data = '[' . $string_data . ']';
+  $string_data = json_decode($string_data); # Convert it back into a PHP Object/Array
+  $count=0;
+  foreach ($string_data as $value) {
+    if(strcmp($name, $value[0])==0)
+    {
+      $contents = str_replace("save the dogs", '', $filedata);
+      #preg_replace($name, "", $filedata);
+      file_put_contents("causes.txt",$filedata, FILE_APPEND | LOCK_EX);
     }
+    $count = $count+1;
+  }
 }
 ?>
 </body>
