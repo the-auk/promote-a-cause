@@ -18,7 +18,7 @@
   ?>
   <form method="POST" action="delete.php?a=delete&arg1=<?php echo $value['title']; ?>"><tr>
       <td style="text-align:center"><?php echo $value['likes']; ?></td>
-      <td style="text-align:center" width=200px ><a href=""><?php echo $value['title']; ?></a></td>
+      <td style="text-align:center" width=200px ><a href="thumbs.php?a=like&arg1=<?php echo $value['title']; ?>"><?php echo $value['title']; ?></a></td>
       <td><input type="submit" value="delete" name="delete"></th>
   </tr></form>
   <?php

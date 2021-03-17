@@ -32,19 +32,22 @@ function confirm(){
   $title = $params['arg1'];
 
   $string_data = file_get_contents('causes.txt'); # Grab the data
-  $replace_data = file_get_contents('causes.txt');
-  echo $replace_data;
   $string_data = rtrim(trim($string_data), ',');
   $string_data = '[' . $string_data . ']';
   $string_data = json_decode($string_data, true); # Convert it back into a PHP Object/Array
+  $count=0;
+  file_put_contents("causes.txt",NULL);
   foreach ($string_data as $value) {
     if($params['arg1']==$value['title']){
-      echo "starting";
-      $string = '{"likes":'.$value['likes'].',"title":"'.$value['title']. '","description":"' .$value['description'].'"},';
-      preg_replace($string,"",$replace_data);
-      echo $replace_data;
-      file_put_contents("causes.txt", $replace_data);
+      unset($string_data[$count]);
     }
+    $count++;
+  }
+  foreach ($string_data as $value) {
+    $data = ['likes'=> $value['likes'],'title'=> $value['title'],'description'=> $value['description']];
+    $data = json_encode($data). ",\n";
+    echo "this is the data".$data;
+    file_put_contents("causes.txt",$data, FILE_APPEND | LOCK_EX);
   }
 }
 ?>
