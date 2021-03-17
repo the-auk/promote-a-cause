@@ -3,9 +3,7 @@
 <body>
 
 <h1><a href="index.php"><?php echo "Promote-a-Cause" ?> </a></h1>
-
 <h2>Current Campaigns <a href="add.php">⊞</a></h2>
-
 <table>
 <tbody>
   <tr>
@@ -15,22 +13,16 @@
   $string_data = file_get_contents('causes.txt', true); # Grab the data
   $string_data = rtrim(trim($string_data), ',');
   $string_data = '[' . $string_data . ']';
-  $string_data = json_decode($string_data); # Convert it back into a PHP Object/Array
-  $temp='fail';
-  foreach ($string_data as $key => $value) {
-  $temp=$value[0];
+  $string_data = json_decode($string_data, true); # Convert it back into a PHP Object/Array
+  foreach ($string_data as $value) {
   ?>
-  <tr>
-      <td style="text-align:center"><?php echo $value[2]; ?></td>
-      <td style="text-align:center" width=200px ><a href=""><?php echo $temp; ?></a></td>
-      <form method="POST"><td><input type="submit" value="delete" name="delete"></th></form>
-  </tr>
-
+  <form method="POST" action="delete.php?a=delete&arg1=<?php echo $value['title']; ?>"><tr>
+      <td style="text-align:center"><?php echo $value['likes']; ?></td>
+      <td style="text-align:center" width=200px ><a href=""><?php echo $value['title']; ?></a></td>
+      <td><input type="submit" value="delete" name="delete"></th>
+  </tr></form>
   <?php
 }
-    if(isset($_POST['delete'])){
-      echo "title";
-    }
   ?>
 </body>
 </html>

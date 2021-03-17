@@ -26,21 +26,25 @@ function cancel(){
 }
 
 function confirm(){
-  $name="save the dogs";
-  $string_data = file_get_contents('causes.txt', true); # Grab the data
-  $filedata = file_get_contents('causes.txt', true);
+  $url = "localhost/$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+  $url_components = parse_url($url);
+  parse_str($url_components['query'], $params);
+  $title = $params['arg1'];
+
+  $string_data = file_get_contents('causes.txt'); # Grab the data
+  $replace_data = file_get_contents('causes.txt');
+  echo $replace_data;
   $string_data = rtrim(trim($string_data), ',');
   $string_data = '[' . $string_data . ']';
-  $string_data = json_decode($string_data); # Convert it back into a PHP Object/Array
-  $count=0;
+  $string_data = json_decode($string_data, true); # Convert it back into a PHP Object/Array
   foreach ($string_data as $value) {
-    if(strcmp($name, $value[0])==0)
-    {
-      $contents = str_replace("save the dogs", '', $filedata);
-      #preg_replace($name, "", $filedata);
-      file_put_contents("causes.txt",$filedata, FILE_APPEND | LOCK_EX);
+    if($params['arg1']==$value['title']){
+      echo "starting";
+      $string = '{"likes":'.$value['likes'].',"title":"'.$value['title']. '","description":"' .$value['description'].'"},';
+      preg_replace($string,"",$replace_data);
+      echo $replace_data;
+      file_put_contents("causes.txt", $replace_data);
     }
-    $count = $count+1;
   }
 }
 ?>
