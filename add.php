@@ -32,21 +32,17 @@ function save(){
     $data = ['likes'=> $likes,'title'=> $title,'description'=> $desc];
     $data = json_encode($data). ",\n";
     file_put_contents("causes.txt",$data, FILE_APPEND | LOCK_EX);
-
-    $string_data = file_get_contents('causes.txt', true); # Grab the data
-    $string_data = rtrim(trim($string_data), ',');
-    $string_data = '[' . $string_data . ']';
-    $string_data = json_decode($string_data, true); # Convert it back into a PHP Object/Array
-    foreach ($string_data as $value) {
-      echo "this is the title \n";
-      echo $value['title'];
-      echo "\n";
-    }
+    echo $title." added to the Cause list!";
+#decoding data and using it
+    #$string_data = file_get_contents('causes.txt', true);
+    #$string_data = rtrim(trim($string_data), ',');
+    #$string_data = '[' . $string_data . ']';
+    #$string_data = json_decode($string_data, true);
+    #foreach ($string_data as $value) {}
 }
 
 function cancel(){
       header("Location:index.php");
-      echo "working";
 }
  ?>
 </body>

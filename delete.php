@@ -3,10 +3,14 @@
 <body>
 
 <h1><a href="index.php">Promote-a-Cause</a></h1>
-
-<p>Are you sure you want to delete the cause:</p>
+<?php
+$url = "localhost/$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+$url_components = parse_url($url);
+parse_str($url_components['query'], $params);
+$title = $params['arg1'];
+?>
+Are you sure you want to delete the cause: <b><?php echo $title?></b>?
 <form method="post">
-  <input type="text" value="title" name="title">
   <div style="margin:auto; width:1.5in; padding:0.15in;">
   <input type="submit" value="Confirm" name="confirm">
   <input type="submit" value="Cancel" name="cancel">
@@ -49,6 +53,7 @@ function confirm(){
     echo "this is the data".$data;
     file_put_contents("causes.txt",$data, FILE_APPEND | LOCK_EX);
   }
+  cancel();
 }
 ?>
 </body>
